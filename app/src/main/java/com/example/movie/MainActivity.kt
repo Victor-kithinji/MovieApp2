@@ -1,23 +1,20 @@
 package com.example.movie
 
 import android.annotation.SuppressLint
+import android.graphics.ImageDecoder.ImageInfo
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -26,9 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.movie.ui.theme.Grayish
 import com.example.movie.ui.theme.MovieTheme
-import com.example.movie.ui.theme.Orange
 
 
 class MainActivity : ComponentActivity() {
@@ -36,72 +31,36 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val movies = listOf(
-                R.drawable.bridgerton,
-                R.drawable.cobra_kai,
-                R.drawable.moneyheist,
-                R.drawable.peakyblinders,
-                R.drawable.riverdale,
-                R.drawable.strangerthings,
-                R.drawable.treason,
-                R.drawable.you
-            )
+
             MovieTheme {
                 Scaffold(
-                    topBar = {
-                        Column(
-                            modifier = Modifier
-                                .padding(horizontal = 16.dp),
-                        ) {
-                            TopAppBar(
 
-                                navigationIcon = {
-                                    Icon(
-                                        imageVector = Icons.Default.Menu,
-                                        contentDescription = null,
-                                    )
+                    topBar = {
+                        Row {
+
+                            TopAppBar(
+                                {
+                                    Row {
+                                        Text(
+                                            text = "Mov",
+                                            fontSize = 27.sp,
+                                            fontWeight = FontWeight.SemiBold
+                                        )
+                                        Text(
+                                            color = Color.Red,
+                                            text = "ve",
+                                            fontSize = 26.sp,
+                                            fontWeight = FontWeight.SemiBold
+                                        )
+                                    }
                                 },
                                 actions = {
-                                    Image(
-                                        modifier = Modifier
-                                            .size(40.dp)
-                                            .clip(CircleShape),
-                                        painter = painterResource(id = R.drawable.manurios),
-                                        contentDescription = null,
-                                        contentScale = ContentScale.Crop,
+                                    Icon(
+                                        imageVector = Icons.Default.Search,
+                                        contentDescription = null
                                     )
                                 },
-                                title = {}
                             )
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(8.dp),
-                                horizontalArrangement = Arrangement.SpaceBetween,
-                            ) {
-                                Text(
-                                    text = "Activity",
-                                    fontSize = 18.sp,
-                                    fontWeight = FontWeight.SemiBold
-
-                                )
-                                Row(
-                                    horizontalArrangement = Arrangement.spacedBy(12.dp)
-                                ) {
-                                    var selectedTab by remember {
-                                        mutableStateOf("Friends")
-                                    }
-                                    RoundedTab(title = "Friends",
-                                        selectedTab = selectedTab,
-                                        onClickTab = { title -> selectedTab = title })
-
-                                    RoundedTab(title = "You",
-                                        selectedTab = selectedTab,
-                                        onClickTab = { title -> selectedTab = title })
-
-                                }
-
-                            }
                         }
                     }
                 ) {
@@ -111,209 +70,113 @@ class MainActivity : ComponentActivity() {
                         verticalArrangement = Arrangement.spacedBy(24.dp),
                     ) {
                         item {
-                            CollectionComponent(
-                                circleContent = {
-                                                Text(text = "G")
-                                },
-                                name = "Gregor",
-                                time = "2 min",
-                                type = "Liked Collection",
-                                content = {
-                                    Text(
-                                        text = "The Best Of Robert Downey Jr",
-                                        color = Orange,
-                                        fontWeight = FontWeight.SemiBold,
-                                    )
-                                }
+                            Text(
+                                text = "Popular Movie",
+                                fontSize = 22.sp,
+                                fontWeight = FontWeight.SemiBold
                             )
+                            Column {
+                                Spacer(modifier = Modifier.height(12.dp))
+                                SlidingImage(movies = null)
+
+                            }
                         }
+
                         item {
-                            CollectionComponent(
-                                circleContent = {
-                                    Text(text = "S")
-                                },
-                                name = "Stewart",
-                                time = "3 min",
-                                type = "liked",
-                                content = {
-                                    Column {
-                                        Spacer(modifier = Modifier.height(12.dp))
-                                        LazyRow(
-                                            horizontalArrangement = Arrangement.spacedBy(8.dp),
-                                        ) {
-                                            items(movies) { movie ->
-                                                Card(
-                                                    modifier = Modifier
-                                                        .width(100.dp)
-                                                        .height(150.dp),
-                                                ) {
-                                                    Image(
-                                                        modifier = Modifier.fillMaxSize(),
-                                                        painter = painterResource(id = movie),
-                                                        contentDescription = null,
-                                                        contentScale = ContentScale.Crop,
-                                                    )
-                                                }
-                                            }
-                                        }
-                                        Spacer(modifier = Modifier.height(8.dp))
-                                        Button(
-                                            modifier = Modifier.fillMaxWidth(),
-                                            onClick = { /*TODO*/ },
-                                            shape = RoundedCornerShape(8.dp),
-                                            colors = ButtonDefaults.buttonColors(
-//                                                containerColor = Grayish,
-                                                contentColor = Color.Gray,
-                                            ),
-                                        ) {
-                                            Text(text = "2 more")
-                                        }
-                                    }
-                                },
+                            Text(
+                                text = "Tv Shows",
+                                fontSize = 22.sp,
+                                fontWeight = FontWeight.SemiBold
                             )
+                            Column {
+                                Spacer(modifier = Modifier.height(12.dp))
+                                SlidingImage(movies = null)
+
+                            }
                         }
+
                         item {
-                            CollectionComponent(
-                                backgroundColor = Color.Black,
-                                circleContent = {
-                                                Image(
-                                                    modifier = Modifier.size(24.dp),
-                                                    painter = painterResource(id = R.drawable.netfli),
-                                                    contentDescription = null,
-                                                    contentScale = ContentScale.Crop,
-                                                )
-                                },
-                                name = "Netflix",
-                                time = "10 min",
-                                type = "Posted",
-                                content = {
-                                    Column() {
-                                        Spacer(modifier = Modifier.height(8.dp))
-                                        Text(
-                                            text = "Watch the official trailer for",
-                                        fontWeight = FontWeight.SemiBold,
-                                            fontSize = 16.sp,
-                                        )
-
-                                        Text(
-                                            text = "The Irishman",
-                                            color = Orange,
-                                            fontWeight = FontWeight.SemiBold,
-                                            fontSize = 16.sp,
-                                        )
-                                        Image(
-                                            modifier = Modifier
-                                                .height(200.dp)
-                                                .clip(RoundedCornerShape(10.dp)),
-                                            painter = painterResource(id = R.drawable.moneyheist),
-                                            contentDescription = null,
-                                            contentScale = ContentScale.Crop,
-                                        )
-
-                                    }
-                                }
-
+                            Text(
+                                text = "Continue Watching",
+                                fontSize = 22.sp,
+                                fontWeight = FontWeight.SemiBold
                             )
-
+                            Column {
+                                Spacer(modifier = Modifier.height(12.dp))
+                                SlidingImage(movies = null)
+                            }
                         }
                     }
 
                 }
-
             }
         }
-    }
 
-    @Composable
-    private fun CollectionComponent(
-        type : String,
-        name : String,
-        time :String,
-        circleContent: @Composable () -> Unit,
-        content: @Composable () -> Unit = {},
-         backgroundColor: Color = Grayish,
-    ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
-        ) {
-            ItemComponent(
-                backgroundColor = backgroundColor,
-                content = {
-                    circleContent()
-                },
-            )
-            Column {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text(
-                        text = name,
-                        fontWeight = FontWeight.SemiBold
-                    )
-                    Text(
-                        text = time,
-                        color = Color.Gray
-                    )
-                }
-                Text(
-                    text = type,
-                    color = Color.LightGray
-                )
-                content()
-            }
-        }
     }
 }
-
 @Composable
-fun ItemComponent(
-    content: @Composable () -> Unit,
-    backgroundColor: Color,
+fun SlidingImage(
+    movies: List<ImageInfo>?
 ) {
-    Box(
-        modifier = Modifier
-            .size(45.dp)
-            .clip(CircleShape)
-            .background(backgroundColor),
-        contentAlignment = Alignment.Center,
-    ) {
-        content()
-    }
+    val movies = listOf(
+        ImageInfo("Bridgerton", "Dec 16, 2022", R.drawable.bridgerton),
+        ImageInfo("Treason", "Mar 16, 2023", R.drawable.treason),
+        ImageInfo("You", "Dec 16, 2020", R.drawable.you),
+        ImageInfo("Cobra Kai", "Oct 21, 2020", R.drawable.cobra_kai),
+        ImageInfo("Money Heist", "Dec 6, 2022", R.drawable.moneyheist),
+        ImageInfo("Peaky Blinders", "June 16, 2023", R.drawable.peakyblinders),
+        ImageInfo("Riverdale", "May 19, 2021", R.drawable.riverdale),
+        ImageInfo("Stranger Things", "Feb 20, 2022", R.drawable.strangerthings),
 
-}
-
-@Composable
-fun RoundedTab(
-    selectedTab: String,
-    title: String,
-    onClickTab: (title: String) -> Unit,
-) {
-    val selected = selectedTab == title
-    Box(
-        modifier = Modifier
-            .height(40.dp)
-            .clip(RoundedCornerShape(20.dp))
-            .background(
-                if (selected) {
-                    Orange
-                } else {
-                    Grayish
-                },
-            ).clickable {
-                onClickTab(title)
-            },
-        contentAlignment = Alignment.Center,
-    ) {
-        Text(
-            modifier = Modifier.padding(horizontal = 16.dp),
-            text = title,
-            color = if (selected) {
-                Color.White
-            } else {
-                Color.Black
-            },
         )
+    val movies2 = listOf(
+        ImageInfo("Into The Night", "Dec 16, 2022", R.drawable.into_the_night),
+        ImageInfo("Muted", "Mar 16, 2023", R.drawable.muted),
+        ImageInfo("Obsession", "Dec 16, 2020", R.drawable.obsession),
+        ImageInfo("Session", "Oct 21, 2020", R.drawable.session),
+        ImageInfo("Sex Life", "Dec 6, 2022", R.drawable.sex_life),
+        ImageInfo("The Nurse", "June 16, 2023", R.drawable.the_nurse),
+        ImageInfo("Unseen", "May 19, 2021", R.drawable.unseen),
+        ImageInfo("Vortex", "Feb 20, 2022", R.drawable.vortex),
+    )
+    LazyRow {
+        items(movies) { movie ->
+            Column(
+                modifier = Modifier.padding(horizontal = 8.dp)
+            ) {
+                Card(
+                    modifier = Modifier
+                        .width(130.dp)
+                        .height(190.dp),
+                ) {
+                    Image(
+                        painter = painterResource(id = movie.imageResId),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .size(200.dp)
+                            .clip(RoundedCornerShape(12.dp)),
+                        contentScale = ContentScale.Crop,
+                    )
+
+                }
+
+                Text(
+                    text = movie.name,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 18.sp,
+                    modifier = Modifier.padding(top = 8.dp)
+                )
+                Text(
+                    text = movie.date,
+                    fontSize = 14.sp,
+                    modifier = Modifier.padding(top = 4.dp),
+                    color = Color.LightGray,
+                )
+            }
+        }
     }
 }
+
+
+
